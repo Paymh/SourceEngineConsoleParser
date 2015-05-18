@@ -47,12 +47,6 @@
     <Compile Include="KeyCode.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Parser.cs" />
-    <Compile Include="SmileyBinder.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Content Include="ParserExtended.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
