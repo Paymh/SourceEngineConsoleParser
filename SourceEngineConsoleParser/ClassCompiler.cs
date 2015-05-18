@@ -55,7 +55,7 @@ namespace SourceEngineConsoleParser
             }
             newDomain = AppDomain.CreateDomain("newDomain");
             newDomain.SetupInformation.ShadowCopyFiles = "true";
-            byte[] rawAssembly = loadFile(extensionName + ".dll");
+            byte[] rawAssembly = loadFile(Application.StartupPath + "\\" + extensionName + ".dll");
             assembly = newDomain.Load(rawAssembly, null);
            parserExtensionClass = (Parser)assembly.CreateInstance("SourceEngineConsoleParser." + extensionName);
             
