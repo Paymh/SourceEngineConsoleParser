@@ -11,7 +11,6 @@ namespace SourceEngineConsoleParser
     public static class Program
     {
         public static Logger logger = new Logger();
-        public static string cfgPath = null;
         public static string gameDir = null;
         public static string keyValue = null;
         public static string customPath = null;
@@ -38,7 +37,6 @@ namespace SourceEngineConsoleParser
                     parserExtensions.Add(ClassCompiler.CompileExtensionMethod(arg));
                 }
             }
-
             foreach (Parser parser in parserExtensions)
             {
                 parser.Load();
@@ -85,20 +83,17 @@ namespace SourceEngineConsoleParser
                 Console.Write("Please enter path to Source game directory:  ");
                 gameDir = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
-                logger.Write("Please enter path to cfg folder:  ", Logger.LogLevel.Info);
-                cfgPath = Console.ReadLine();
+                logger.Write("Please enter the path to custom folder (<path>\\custom\\customstuff):  ", Logger.LogLevel.Info);
+                customPath = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
                 logger.Write("Please enter a Source engine Key value for executing commands:  ", Logger.LogLevel.Info);
                 keyValue = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
-                logger.Write("Please enter the path to custom folder (<path>\\custom\\customstuff):  ",Logger.LogLevel.Info);
-                customPath = Console.ReadLine();
                 Stream stream = File.Create("config.cfg");
                 StreamWriter sw = new StreamWriter(stream);
                 sw.WriteLine(gameDir);
-                sw.WriteLine(cfgPath);
-                sw.WriteLine(keyValue);
                 sw.WriteLine(customPath);
+                sw.WriteLine(keyValue);
                 sw.Close();
                 stream.Close();
             }
@@ -106,9 +101,8 @@ namespace SourceEngineConsoleParser
             {
                 StreamReader sr = new StreamReader("config.cfg");
                 gameDir = sr.ReadLine();
-                cfgPath = sr.ReadLine();
-                keyValue = sr.ReadLine();
                 customPath = sr.ReadLine();
+                keyValue = sr.ReadLine();
                 sr.Close();
             }
         }
@@ -116,7 +110,7 @@ namespace SourceEngineConsoleParser
         public static void ExecuteIngame(String[] commands)
         {
             //Write commands to config file
-            File.WriteAllLines(cfgPath + "executer.cfg", commands);
+            File.WriteAllLines(customPath + @"cfg\executer.cfg", commands);
             //Press bind to execute config
             SendKeyPress();
         }
@@ -124,7 +118,7 @@ namespace SourceEngineConsoleParser
         public static void ExecuteIngame(String command)
         {
             //Write commands to config file
-            File.WriteAllText(cfgPath + "executer.cfg", command);
+            File.WriteAllText(customPath + @"cfg\executer.cfg", command);
             //Press bind to execute config
             SendKeyPress();
         }
@@ -140,8 +134,8 @@ namespace SourceEngineConsoleParser
 
         static void UpdateAutoexec()
         {
-            string autoexec = File.ReadAllText(cfgPath + "autoexec.cfg");
-            StreamWriter sw = new StreamWriter(cfgPath + "autoexec.cfg", true);
+            string autoexec = File.ReadAllText(customPath + @"cfg\autoexec.cfg");
+            StreamWriter sw = new StreamWriter(customPath + @"cfg\autoexec.cfg", true);
             //Ensure logging is enabled
             if (!autoexec.Contains("con_logfile out.log"))
             {
