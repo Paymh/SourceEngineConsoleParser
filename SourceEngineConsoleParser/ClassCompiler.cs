@@ -18,8 +18,7 @@ namespace SourceEngineConsoleParser
     {
         static AppDomain newDomain;
         static Assembly assembly;
-        public static Parser parserExtensionClass;
-        public static void CompileExtensionMethod(String extensionName)
+        public static Parser CompileExtensionMethod(String extensionName)
         {
             CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
             CSharpCodeProvider csp = new CSharpCodeProvider();
@@ -51,13 +50,12 @@ namespace SourceEngineConsoleParser
             else
             {
                 Program.logger.WriteLine("Compiled " + extensionName + ".cs successfully",Logger.LogLevel.Success);
-                Program.logger.WriteLine("Running Source Console Parser",Logger.LogLevel.Info);
             }
             newDomain = AppDomain.CreateDomain("newDomain");
             newDomain.SetupInformation.ShadowCopyFiles = "true";
             byte[] rawAssembly = loadFile(Application.StartupPath + "\\" + extensionName + ".dll");
             assembly = newDomain.Load(rawAssembly, null);
-           parserExtensionClass = (Parser)assembly.CreateInstance("SourceEngineConsoleParser." + extensionName);
+           return (Parser)assembly.CreateInstance("SourceEngineConsoleParser." + extensionName);
             
         }
 

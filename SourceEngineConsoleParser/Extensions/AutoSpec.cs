@@ -7,6 +7,12 @@ namespace SourceEngineConsoleParser
     public class AutoSpec : Parser
     {
         bool isEnabled = false;
+
+        public void Load()
+        {
+		Program.logger.WriteLine("Loaded Auto Spectate extension", Logger.LogLevel.Success);
+        }
+
         public void Parse(string text)
         {
             if (text.Contains("parser_autospec_enabled"))

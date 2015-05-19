@@ -9,5 +9,6 @@ namespace SourceEngineConsoleParser
         public interface Parser
         {
         void Parse(String text);
+        void Load();
         }
 }

@@ -7,6 +7,12 @@ namespace SourceEngineConsoleParser
     {
         bool enabled = false;
         string playerName = "";
+
+	public void Load()
+        {
+		Program.logger.WriteLine("Loaded Smiley Binder extension", Logger.LogLevel.Success);
+        }
+
         public void Parse(string text)
         {
             //Change logic below

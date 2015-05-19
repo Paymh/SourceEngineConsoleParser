@@ -11,14 +11,16 @@ namespace SourceEngineConsoleParser
     public static class Program
     {
         public static Logger logger = new Logger();
-        static string cfgPath = null;
-        static string gameDir = null;
-        static string keyValue = null;
+        public static string cfgPath = null;
+        public static string gameDir = null;
+        public static string keyValue = null;
+        public static string customPath = null;
         static FileStream fs;
         static StreamReader sReader;
         static string prevText = "";
+        static List<Parser> parserExtensions = new List<Parser>();
 
-        [DllImport(@"C:\KeypressLibrary.dll",CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"C:\KeypressLibrary.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void Presskey(ushort key);
 
         [DllImport(@"C:\KeypressLibrary.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -28,8 +30,24 @@ namespace SourceEngineConsoleParser
         {
             ReadConfig();
             UpdateAutoexec();
-            ClassCompiler.CompileExtensionMethod(args[0]);
+            Program.logger.WriteLine("Running Source Console Parser", Logger.LogLevel.Info);
+            if (args.Length > 0)
+            {
+                foreach (String arg in args)
+                {
+                    parserExtensions.Add(ClassCompiler.CompileExtensionMethod(arg));
+                }
+            }
 
+            foreach (Parser parser in parserExtensions)
+            {
+                parser.Load();
+            }
+            ReadConsole();
+        }
+
+        static void ReadConsole()
+        {
             fs = new FileStream(gameDir + "out.log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             sReader = new StreamReader(fs);
             bool readAll = true;
@@ -46,7 +64,12 @@ namespace SourceEngineConsoleParser
                     String text = s;
                     if (text != prevText)
                     {
-                        ClassCompiler.parserExtensionClass.Parse(text);
+                        foreach (Parser extension in parserExtensions)
+                        {
+                            extension.Parse(text);
+                        }
+                        if (parserExtensions.Count == 0)
+                            logger.WriteLine(text, Logger.LogLevel.Info);
                     }
                     prevText = text;
                 }
@@ -65,13 +88,17 @@ namespace SourceEngineConsoleParser
                 logger.Write("Please enter path to cfg folder:  ", Logger.LogLevel.Info);
                 cfgPath = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
-                logger.Write("Please enter a Source engine Key value for executing commands:  ",Logger.LogLevel.Info);
+                logger.Write("Please enter a Source engine Key value for executing commands:  ", Logger.LogLevel.Info);
                 keyValue = Console.ReadLine();
+                logger.WriteLine("", Logger.LogLevel.Nothing);
+                logger.Write("Please enter the path to custom folder (<path>\\custom\\customstuff):  ",Logger.LogLevel.Info);
+                customPath = Console.ReadLine();
                 Stream stream = File.Create("config.cfg");
                 StreamWriter sw = new StreamWriter(stream);
                 sw.WriteLine(gameDir);
                 sw.WriteLine(cfgPath);
                 sw.WriteLine(keyValue);
+                sw.WriteLine(customPath);
                 sw.Close();
                 stream.Close();
             }
@@ -81,6 +108,7 @@ namespace SourceEngineConsoleParser
                 gameDir = sr.ReadLine();
                 cfgPath = sr.ReadLine();
                 keyValue = sr.ReadLine();
+                customPath = sr.ReadLine();
                 sr.Close();
             }
         }
