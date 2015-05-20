@@ -77,7 +77,16 @@ namespace SourceEngineConsoleParser
 
         static void ReadConfig()
         {
+            bool runSetup = false;
+            String[] cfgLines;
             if (!File.Exists("config.cfg"))
+                runSetup = true;
+            else {
+                cfgLines = System.IO.File.ReadAllLines("config.cfg");
+                if (cfgLines.Contains(""))
+                    runSetup = true;
+            }
+            if (runSetup)
             {
                 logger.ClearConsole();
                 Console.Write("Please enter path to Source game directory:  ");
@@ -135,8 +144,17 @@ namespace SourceEngineConsoleParser
 
         static void UpdateAutoexec()
         {
-            string autoexec = File.ReadAllText(customPath + @"cfg\autoexec.cfg");
-            StreamWriter sw = new StreamWriter(customPath + @"cfg\autoexec.cfg", true);
+            String autoexec = "";
+            StreamWriter sw = null;
+            try {
+                autoexec = File.ReadAllText(customPath + @"cfg\autoexec.cfg");
+                sw = new StreamWriter(customPath + @"cfg\autoexec.cfg", true);
+            }
+            catch (System.IO.DirectoryNotFoundException) {
+                Console.Write("Invalid path to directory containing autoexec:\n" + customPath + "\nPress any key to exit.");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
             //Ensure logging is enabled
             if (!autoexec.Contains("con_logfile out.log"))
             {
