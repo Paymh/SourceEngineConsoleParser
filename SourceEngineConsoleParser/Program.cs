@@ -46,7 +46,8 @@ namespace SourceEngineConsoleParser
 
         static void ReadConsole()
         {
-            fs = new FileStream(gameDir + "out.log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            fs = new FileStream(gameDir + "out.log", FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite);
+
             sReader = new StreamReader(fs);
             bool readAll = true;
             while (true)
@@ -92,10 +93,10 @@ namespace SourceEngineConsoleParser
                 Console.Write("Please enter path to Source game directory:  ");
                 gameDir = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
-                logger.Write("Please enter the path to custom folder (<path>\\custom\\customstuff):  ", Logger.LogLevel.Info);
+                logger.Write("Please enter the subdirectory to the custom folder containing your autoexec. (eg \\tf\\custom\\customstuff\\):  ", Logger.LogLevel.Info);
                 customPath = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
-                logger.Write("Please enter a Source engine Key value for executing commands:  ", Logger.LogLevel.Info);
+                logger.Write("Please enter a key that you do not use in-game (Names for non-alphanumeric keys can be found on the wiki). This will be used for executing commands. :  ", Logger.LogLevel.Info);
                 keyValue = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
                 Stream stream = File.Create("config.cfg");
@@ -147,11 +148,16 @@ namespace SourceEngineConsoleParser
             String autoexec = "";
             StreamWriter sw = null;
             try {
-                autoexec = File.ReadAllText(customPath + @"cfg\autoexec.cfg");
-                sw = new StreamWriter(customPath + @"cfg\autoexec.cfg", true);
+                autoexec = File.ReadAllText(gameDir + customPath + @"cfg\autoexec.cfg");
+                sw = new StreamWriter(gameDir + customPath + @"cfg\autoexec.cfg", true);
             }
             catch (System.IO.DirectoryNotFoundException) {
-                Console.Write("Invalid path to directory containing autoexec:\n" + customPath + "\nPress any key to exit.");
+                Console.Write("Invalid path to custom directory:\n" + gameDir + customPath + "\nPress any key to exit.");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            catch (System.NotSupportedException) {
+                Console.Write("Invalid path to custom directory:\n" + gameDir + customPath + "\nPress any key to exit.");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
