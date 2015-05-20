@@ -125,7 +125,7 @@ namespace SourceEngineConsoleParser
                 sr.Close();
                 // Handle old format custom folder paths
                 if (customPath.Contains(gameDir.Remove(gameDir.Length - 1))) {
-                    Console.Write("Your config file is in the wrong format. Press any key to re-run setup.");
+                    Console.Write("Your config file is in the old format. Press any key to re-run setup.");
                     Console.ReadKey();
                     File.Delete("config.cfg");
                     ReadConfig();
@@ -169,11 +169,13 @@ namespace SourceEngineConsoleParser
             }
             catch (System.IO.DirectoryNotFoundException) {
                 Console.Write("Invalid path to custom directory:\n" + gameDir + customPath + "\nPress any key to exit.");
+                File.Delete("config.cfg");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
             catch (System.NotSupportedException) {
                 Console.Write("Invalid path to custom directory:\n" + gameDir + customPath + "\nPress any key to exit.");
+                File.Delete("config.cfg");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
