@@ -92,12 +92,16 @@ namespace SourceEngineConsoleParser
                 logger.ClearConsole();
                 Console.Write("Please enter path to Source game directory (eg C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Team Fortress 2\\) :  ");
                 gameDir = Console.ReadLine();
+                if (gameDir.Length > 0 && gameDir[gameDir.Length - 1] != '\\' && gameDir[gameDir.Length - 1] != '/')
+                    gameDir += "\\";
                 logger.WriteLine("", Logger.LogLevel.Nothing);
                 logger.Write("Please enter the subdirectory to the custom folder containing your autoexec. (eg tf\\custom\\customstuff\\) :  ", Logger.LogLevel.Info);
                 customPath = Console.ReadLine();
+                if (customPath.Length > 0 && customPath[customPath.Length - 1] != '\\' && customPath[customPath.Length - 1] != '/')
+                    customPath += "\\";
                 // Attempt to handle people putting a slash at the beginning of their custom folder and the end of their game directory
                 // This could probably be improved quite a bit
-                if (gameDir[gameDir.Length - 1] == customPath[0]) {
+                if (customPath.Length > 0 && gameDir.Length > 0 && gameDir[gameDir.Length - 1] == customPath[0]) {
                     customPath = customPath.Substring(1);
                 }
                 logger.WriteLine("", Logger.LogLevel.Nothing);
@@ -122,8 +126,9 @@ namespace SourceEngineConsoleParser
                 // Handle old format custom folder paths
                 if (customPath.Contains(gameDir.Remove(gameDir.Length - 1))) {
                     Console.Write("Your config file is in the wrong format. Press any key to re-run setup.");
-                        File.Delete("config.cfg");
-                        ReadConfig();
+                    Console.ReadKey();
+                    File.Delete("config.cfg");
+                    ReadConfig();
                 }
             }
         }
@@ -178,13 +183,13 @@ namespace SourceEngineConsoleParser
                 sw.WriteLine();
                 sw.WriteLine("con_logfile out.log");
             }
-            else if (!autoexec.Contains("con_timestamp 1"))
+            if (!autoexec.Contains("con_timestamp 1"))
             {
                 sw.WriteLine();
                 sw.WriteLine("con_timestamp 1");
             }
             //Ensure bind is set for executing
-            else if (!autoexec.Contains("bind " + keyValue + " \"exec executer.cfg\""))
+            if (!autoexec.Contains("bind " + keyValue + " \"exec executer.cfg\""))
             {
                 sw.WriteLine();
                 sw.WriteLine("bind " + keyValue + " \"exec executer.cfg\"");
