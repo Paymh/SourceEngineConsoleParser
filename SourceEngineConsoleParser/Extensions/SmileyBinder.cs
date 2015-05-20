@@ -16,14 +16,14 @@ namespace SourceEngineConsoleParser
         public void Parse(string text)
         {
             //Change logic below
-            if (text.Contains("parser_shittalk_enabled"))
+            if (text.Contains("parser_shittalk_enable"))
             {
                 Program.logger.WriteLine("Smiley Binding enabled",Logger.LogLevel.Warn);
                 enabled = true;
                 Program.ExecuteIngame(new String[] { "name", "echo Parser > Shittalk enabled" });
 
             }
-            else if (text.Contains("parser_shittalk_disabled"))
+            else if (text.Contains("parser_shittalk_disable"))
             {
                 Program.logger.WriteLine("Smiley Binding disabled", Logger.LogLevel.Warn);
                 Program.ExecuteIngame("echo Parser > Shittalk disabled");
