@@ -84,9 +84,10 @@ namespace SourceEngineConsoleParser
                 runSetup = true;
             else {
                 cfgLines = System.IO.File.ReadAllLines("config.cfg");
-                if (cfgLines.Contains(""))
+                if (cfgLines.Contains("") || cfgLines.Length == 0)
                     runSetup = true;
             }
+
             if (runSetup)
             {
                 logger.ClearConsole();
@@ -96,7 +97,7 @@ namespace SourceEngineConsoleParser
                 logger.Write("Please enter the subdirectory to the custom folder containing your autoexec. (eg \\tf\\custom\\customstuff\\):  ", Logger.LogLevel.Info);
                 customPath = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
-                logger.Write("Please enter a key that you do not use in-game (Names for non-alphanumeric keys can be found on the wiki). This will be used for executing commands. :  ", Logger.LogLevel.Info);
+                logger.Write("Please enter a key to use for executing commands (Names for non-alphanumeric keys can be found on the wiki). Any existing bind for this key will be overwritten. :  ", Logger.LogLevel.Info);
                 keyValue = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
                 Stream stream = File.Create("config.cfg");
