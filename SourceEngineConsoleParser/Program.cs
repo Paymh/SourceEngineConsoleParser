@@ -91,13 +91,18 @@ namespace SourceEngineConsoleParser
             if (runSetup)
             {
                 logger.ClearConsole();
-                Console.Write("Please enter path to Source game directory:  ");
+                Console.Write("Please enter path to Source game directory (eg : C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Team Fortress 2\\");
                 gameDir = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
-                logger.Write("Please enter the subdirectory to the custom folder containing your autoexec. (eg \\tf\\custom\\customstuff\\):  ", Logger.LogLevel.Info);
+                logger.Write("Please enter the subdirectory to the custom folder containing your autoexec. (eg tf\\custom\\customstuff\\):  ", Logger.LogLevel.Info);
                 customPath = Console.ReadLine();
+                // Attempt to handle people putting a slash at the beginning of their custom folder and the end of their game directory
+                // This could probably be improved quite a bit
+                if (gameDir[gameDir.Length - 1] == customPath[0]) {
+                    customPath = customPath.Substring(1);
+                }
                 logger.WriteLine("", Logger.LogLevel.Nothing);
-                logger.Write("Please enter a key to use for executing commands (Names for non-alphanumeric keys can be found on the wiki). Any existing bind for this key will be overwritten. :  ", Logger.LogLevel.Info);
+                logger.Write("Please enter a key to use for executing commands (names for non-alphanumeric keys can be found on the wiki). Any existing bind for this key will be overwritten. :  ", Logger.LogLevel.Info);
                 keyValue = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
                 Stream stream = File.Create("config.cfg");
