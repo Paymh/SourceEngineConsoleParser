@@ -8,6 +8,9 @@ using System.Runtime.InteropServices;
 
 namespace SourceEngineConsoleParser
 {
+    /// <summary>
+    /// The main program which reads the game log file and allows for sending commands in game
+    /// </summary>
     public static class Program
     {
         public static Logger logger = new Logger();
@@ -44,6 +47,10 @@ namespace SourceEngineConsoleParser
             ReadConsole();
         }
 
+        /// <summary>
+        /// Reads the entire log file, then reads new entries to the log file every 10 ms after being called
+        /// Creates the out.log file if it does not exist already
+        /// </summary>
         static void ReadConsole()
         {
             fs = new FileStream(gameDir + "out.log", FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite);
@@ -76,6 +83,9 @@ namespace SourceEngineConsoleParser
             }
         }
 
+        /// <summary>
+        /// Reads the config file and loads settings or creates the config file if it does not exist or is invalid
+        /// </summary>
         static void ReadConfig()
         {
             bool runSetup = false;
@@ -133,6 +143,10 @@ namespace SourceEngineConsoleParser
             }
         }
 
+        /// <summary>
+        /// Executes multiple commands in game
+        /// </summary>
+        /// <param name="commands">The array of commands to execute in game</param>
         public static void ExecuteIngame(String[] commands)
         {
             //Write commands to config file
@@ -141,6 +155,10 @@ namespace SourceEngineConsoleParser
             SendKeyPress();
         }
 
+        /// <summary>
+        /// Executes a command in game
+        /// </summary>
+        /// <param name="command">The command to execute in game</param>
         public static void ExecuteIngame(String command)
         {
             //Write commands to config file
@@ -149,6 +167,9 @@ namespace SourceEngineConsoleParser
             SendKeyPress();
         }
 
+        /// <summary>
+        /// Sends a single keypress of the key used to execute commands
+        /// </summary>
         static void SendKeyPress()
         {
             
@@ -159,6 +180,9 @@ namespace SourceEngineConsoleParser
             Releasekey((ushort)KeyUtilities.GetKeyCodeFromDescription(keyValue));
         }
 
+        /// <summary>
+        /// Updates the Autoexec to ensure logging is enabled and binds a key to exec the executer config
+        /// </summary>
         static void UpdateAutoexec()
         {
             String autoexec = "";
