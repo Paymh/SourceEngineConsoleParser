@@ -19,10 +19,10 @@ namespace SourceEngineConsoleParser
         static string prevText = "";
         static List<Parser> parserExtensions = new List<Parser>();
 
-        [DllImport(@"C:\KeypressLibrary.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("KeyPressLibrary.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void Presskey(ushort key);
 
-        [DllImport(@"C:\KeypressLibrary.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("KeypressLibrary.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void Releasekey(ushort key);
 
         static void Main(string[] args)
@@ -125,6 +125,7 @@ namespace SourceEngineConsoleParser
 
         static void SendKeyPress()
         {
+            
             Presskey((ushort)KeyUtilities.GetKeyCodeFromDescription(keyValue));
             System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
             timer.Start();

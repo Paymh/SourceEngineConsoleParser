@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceEngineConsoleParser",
 		{771B58FD-BA8B-44A4-8866-8EB0758E83C8} = {771B58FD-BA8B-44A4-8866-8EB0758E83C8}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KeypressLibrary", "..\..\C++\KeypressLibrary\KeypressLibrary\KeypressLibrary.vcxproj", "{771B58FD-BA8B-44A4-8866-8EB0758E83C8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KeypressLibrary", "KeypressLibrary\KeypressLibrary\KeypressLibrary.vcxproj", "{771B58FD-BA8B-44A4-8866-8EB0758E83C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
