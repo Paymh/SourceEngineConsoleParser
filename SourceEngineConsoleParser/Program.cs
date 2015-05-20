@@ -91,10 +91,10 @@ namespace SourceEngineConsoleParser
             if (runSetup)
             {
                 logger.ClearConsole();
-                Console.Write("Please enter path to Source game directory (eg : C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Team Fortress 2\\");
+                Console.Write("Please enter path to Source game directory (eg C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Team Fortress 2\\) :  ");
                 gameDir = Console.ReadLine();
                 logger.WriteLine("", Logger.LogLevel.Nothing);
-                logger.Write("Please enter the subdirectory to the custom folder containing your autoexec. (eg tf\\custom\\customstuff\\):  ", Logger.LogLevel.Info);
+                logger.Write("Please enter the subdirectory to the custom folder containing your autoexec. (eg tf\\custom\\customstuff\\) :  ", Logger.LogLevel.Info);
                 customPath = Console.ReadLine();
                 // Attempt to handle people putting a slash at the beginning of their custom folder and the end of their game directory
                 // This could probably be improved quite a bit
