@@ -79,12 +79,11 @@ namespace SourceEngineConsoleParser
         static void ReadConfig()
         {
             bool runSetup = false;
-            String[] cfgLines;
             if (!File.Exists("config.cfg"))
                 runSetup = true;
             else {
-                cfgLines = System.IO.File.ReadAllLines("config.cfg");
-                if (cfgLines.Contains("") || cfgLines.Length == 0)
+                var cfgLines = System.IO.File.ReadAllLines("config.cfg").Take(3);
+                if (cfgLines.Contains("") || cfgLines.Count() == 0)
                     runSetup = true;
             }
 
@@ -120,6 +119,12 @@ namespace SourceEngineConsoleParser
                 customPath = sr.ReadLine();
                 keyValue = sr.ReadLine();
                 sr.Close();
+                // Handle old format custom folder paths
+                if (customPath.Contains(gameDir.Remove(gameDir.Length - 1))) {
+                    Console.Write("Your config file is in the wrong format. Press any key to re-run setup.");
+                        File.Delete("config.cfg");
+                        ReadConfig();
+                }
             }
         }
 
