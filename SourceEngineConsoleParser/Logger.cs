@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SourceEngineConsoleParser
 {
+    /// <summary>
+    /// Logs information to the console with colour coding
+    /// </summary>
     public class Logger
     {
         private ConsoleColor DefaultColor = ConsoleColor.White;
@@ -20,6 +23,11 @@ namespace SourceEngineConsoleParser
             Nothing
         }
 
+        /// <summary>
+        /// Writes a line to the console in the color corresponding to the LogLevel
+        /// </summary>
+        /// <param name="Message">The message to log to the console</param>
+        /// <param name="logLevel">The LogLevel of the message</param>
         public void WriteLine(String Message, LogLevel logLevel)
         {
             Console.ForegroundColor = LogColor(LogLevel.Info);
@@ -29,6 +37,11 @@ namespace SourceEngineConsoleParser
             Console.ForegroundColor = DefaultColor;
         }
 
+        /// <summary>
+        /// Writes a message to the console in the color corresponding to the LogLevel without a newline after the message
+        /// </summary>
+        /// <param name="Message">The message to log to the console</param>
+        /// <param name="logLevel">The LogLevel of the messages</param>
         public void Write(String Message, LogLevel logLevel)
         {
             Console.ForegroundColor = LogColor(LogLevel.Info);
@@ -38,10 +51,19 @@ namespace SourceEngineConsoleParser
             Console.ForegroundColor = DefaultColor;
         }
 
+        /// <summary>
+        /// Clears the console
+        /// </summary>
         public void ClearConsole()
         {
             Console.Clear();
         }
+
+        /// <summary>
+        /// Returns the colour of the console corresponding to the LogLevel
+        /// </summary>
+        /// <param name="level">The LogLevel to get the colour of</param>
+        /// <returns>The colour of the console corresponding to the LogLevel</returns>
         private ConsoleColor LogColor(LogLevel level)
         {
             switch (level)

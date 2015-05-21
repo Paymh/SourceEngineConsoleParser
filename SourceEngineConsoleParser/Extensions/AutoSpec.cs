@@ -15,14 +15,14 @@ namespace SourceEngineConsoleParser
 
         public void Parse(string text)
         {
-            if (text.Contains("parser_autospec_enabled"))
+            if (text.Contains("parser_autospec_enable"))
             {
                 isEnabled = true;
                 Program.logger.WriteLine("Auto-spectate Enabled", Logger.LogLevel.Warn);
                 Program.ExecuteIngame("echo Parser > Auto-spectate enabled");
                 return;
             }
-            else if (text.Contains("parser_autospec_disabled"))
+            else if (text.Contains("parser_autospec_disable"))
             {
                 isEnabled = false;
                 Program.logger.WriteLine("Auto-spectate Disabled", Logger.LogLevel.Warn);

@@ -189,13 +189,26 @@ namespace SourceEngineConsoleParser
         #endregion
     }
 
+    /// <summary>
+    /// Provides utilities for converting between keys and string representation of keys
+    /// </summary>
     public static class KeyUtilities
     {
+        /// <summary>
+        /// Gets the KeyCode for a key from a String representation of the key
+        /// </summary>
+        /// <param name="desc">The String representation of the key</param>
+        /// <returns>KeyCode of the key in desc</returns>
         public static KeyCode GetKeyCodeFromDescription(String desc)
         {
             return Enum.GetValues(typeof(KeyCode)).Cast<KeyCode>().FirstOrDefault(v => v.GetDescription() == desc);
         }
 
+        /// <summary>
+        /// Gets String representation of a key
+        /// </summary>
+        /// <param name="value">The key to get the String representation of</param>
+        /// <returns>The String representation of value</returns>
         public static string GetDescription(this Enum value)
         {
             Type type = value.GetType();
