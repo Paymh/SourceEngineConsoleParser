@@ -100,7 +100,7 @@ namespace SourceEngineConsoleParser
             if (runSetup)
             {
                 logger.ClearConsole();
-                Console.Write("Please enter path to Source game directory (eg C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Team Fortress 2\\) :  ");
+                logger.Write("Please enter path to Source game directory (eg C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Team Fortress 2\\) :  ",Logger.LogLevel.Info);
                 gameDir = Console.ReadLine();
                 if (gameDir.Length > 0 && gameDir[gameDir.Length - 1] != '\\' && gameDir[gameDir.Length - 1] != '/')
                     gameDir += "\\";
@@ -111,7 +111,8 @@ namespace SourceEngineConsoleParser
                     customPath += "\\";
                 // Attempt to handle people putting a slash at the beginning of their custom folder and the end of their game directory
                 // This could probably be improved quite a bit
-                if (customPath.Length > 0 && gameDir.Length > 0 && gameDir[gameDir.Length - 1] == customPath[0]) {
+                if (customPath.Length > 0 && gameDir.Length > 0 && gameDir[gameDir.Length - 1] == customPath[0])
+                {
                     customPath = customPath.Substring(1);
                 }
                 logger.WriteLine("", Logger.LogLevel.Nothing);
@@ -134,8 +135,9 @@ namespace SourceEngineConsoleParser
                 keyValue = sr.ReadLine();
                 sr.Close();
                 // Handle old format custom folder paths
-                if (customPath.Contains(gameDir.Remove(gameDir.Length - 1))) {
-                    Console.Write("Your config file is in the old format. Press any key to re-run setup.");
+                if (customPath.Contains(gameDir.Remove(gameDir.Length - 1)))
+                {
+                    logger.Write("Your config file is in the old format. Press any key to re-run setup.",Logger.LogLevel.Warn);
                     Console.ReadKey();
                     File.Delete("config.cfg");
                     ReadConfig();
@@ -187,18 +189,21 @@ namespace SourceEngineConsoleParser
         {
             String autoexec = "";
             StreamWriter sw = null;
-            try {
+            try
+            {
                 autoexec = File.ReadAllText(gameDir + customPath + @"cfg\autoexec.cfg");
                 sw = new StreamWriter(gameDir + customPath + @"cfg\autoexec.cfg", true);
             }
-            catch (System.IO.DirectoryNotFoundException) {
-                Console.Write("Invalid path to custom directory:\n" + gameDir + customPath + "\nPress any key to exit.");
+            catch (System.IO.DirectoryNotFoundException)
+            {
+                logger.Write("Invalid path to custom directory:\n" + gameDir + customPath + "\nPress any key to exit.",Logger.LogLevel.Error);
                 File.Delete("config.cfg");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-            catch (System.NotSupportedException) {
-                Console.Write("Invalid path to custom directory:\n" + gameDir + customPath + "\nPress any key to exit.");
+            catch (System.NotSupportedException)
+            {
+                logger.Write("Invalid path to custom directory:\n" + gameDir + customPath + "\nPress any key to exit.",Logger.LogLevel.Error);
                 File.Delete("config.cfg");
                 Console.ReadKey();
                 Environment.Exit(0);
