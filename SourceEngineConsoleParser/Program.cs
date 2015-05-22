@@ -100,7 +100,7 @@ namespace SourceEngineConsoleParser
             if (runSetup)
             {
                 logger.ClearConsole();
-                logger.Write("Please enter path to Source game directory (eg C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Team Fortress 2\\) :  ",Logger.LogLevel.Info);
+                logger.Write("Please enter path to Source game directory (eg C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Team Fortress 2\\tf\\) :  ",Logger.LogLevel.Info);
                 gameDir = Console.ReadLine();
                 if (gameDir.Length > 0 && gameDir[gameDir.Length - 1] != '\\' && gameDir[gameDir.Length - 1] != '/')
                     gameDir += "\\";
