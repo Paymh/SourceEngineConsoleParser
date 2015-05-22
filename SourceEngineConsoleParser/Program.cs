@@ -152,7 +152,7 @@ namespace SourceEngineConsoleParser
         public static void ExecuteIngame(String[] commands)
         {
             //Write commands to config file
-            File.WriteAllLines(customPath + @"cfg\executer.cfg", commands);
+            File.WriteAllLines(gameDir + customPath + @"cfg\executer.cfg", commands);
             //Press bind to execute config
             SendKeyPress();
         }
@@ -164,7 +164,7 @@ namespace SourceEngineConsoleParser
         public static void ExecuteIngame(String command)
         {
             //Write commands to config file
-            File.WriteAllText(customPath + @"cfg\executer.cfg", command);
+            File.WriteAllText(gameDir + customPath + @"cfg\executer.cfg", command);
             //Press bind to execute config
             SendKeyPress();
         }
