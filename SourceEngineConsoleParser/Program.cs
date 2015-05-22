@@ -56,7 +56,6 @@ namespace SourceEngineConsoleParser
             fs = new FileStream(gameDir + "out.log", FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite);
 
             sReader = new StreamReader(fs);
-            logger.Write(sReader.ReadLine(), Logger.LogLevel.Success);
             bool readAll = true;
             while (true)
             {
