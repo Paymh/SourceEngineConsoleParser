@@ -53,7 +53,7 @@ namespace SourceEngineConsoleParser
                         Directory.CreateDirectory((Path.GetDirectoryName(Program.customPath + @"resource\ui\" + Path.GetFullPath(file).Replace(Directory.GetCurrentDirectory() + path + @"resource\ui\", ""))));
                     File.Copy(file, Program.customPath + @"resource\ui\" + Path.GetFullPath(file).Replace(Directory.GetCurrentDirectory() + path + @"resource\ui\", ""), true);
                 }
-                Program.ExecuteIngame("echo Parser > Changed hud to " + path);
+                Program.ExecuteIngame(new String[] {"echo Parser > Changed hud to " + path, "hud_reloadscheme"});
             }
             else
             {
